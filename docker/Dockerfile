@@ -32,11 +32,11 @@ RUN apt-get update && \
         avahi-utils
 
 # Install ROS-related tools
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        git-core \
-        python3-wstool \
-        python3-vcstools 
+# RUN apt-get update && \
+    # apt-get install -y --no-install-recommends \
+        # git-core \
+        # python3-wstool \
+        # python3-vcstools 
 
 # Install librealsense2 libraries
 RUN mkdir -p /etc/apt/keyrings && \
@@ -59,7 +59,8 @@ RUN apt-get update && \
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz && \
     rm -rf /opt/nvim && \
     tar -C /opt -xzf nvim-linux64.tar.gz && \
-    echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> /root/.bashrc
+    echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> /root/.bashrc && \
+    git clone https://github.com/tatsukamijo/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
 # Install PyTorch and other Python packages
 RUN pip install matplotlib transformers accelerate>=0.26.0 && \
