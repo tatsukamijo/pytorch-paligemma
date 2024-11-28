@@ -19,9 +19,6 @@ RUN apt-get update && \
     curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Verify Python and pip versions
-RUN python3 --version && pip --version
-
 # Install essential tools
 RUN apt-get update && \
     apt-get install -y \
@@ -59,10 +56,10 @@ RUN apt-get update && \
     apt-get install -y tmux
 
 # Install neovim
-RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-RUN rm -rf /opt/nvim
-RUN tar -C /opt -xzf nvim-linux64.tar.gz
-RUN echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> /root/.bashrc
+RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz && \
+    rm -rf /opt/nvim && \
+    tar -C /opt -xzf nvim-linux64.tar.gz && \
+    echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> /root/.bashrc
 
 # Install PyTorch and other Python packages
 RUN pip install matplotlib transformers accelerate>=0.26.0 && \

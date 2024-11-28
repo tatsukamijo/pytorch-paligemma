@@ -4,7 +4,7 @@ version: "2.4"
 
 services:
   paligemma:
-    hostname: teleop
+    hostname: paligemma
     runtime: nvidia
     image: common_paligemma:latest
     container_name: "${PROJECT}_paligemma"
