@@ -17,6 +17,7 @@ services:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
       - NVIDIA_REQUIRE_CUDA=cuda>=11.0
+      - SSH_AUTH_SOCK=/ssh-agent
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
@@ -28,6 +29,7 @@ services:
       - "/robot-qnap-2/kamijo/dataset:/root/dataset"
       # Grant display access to X Server.
       - /tmp/.X11-unix:/tmp/.X11-unix
+      - $SSH_AUTH_SOCK:/ssh-agent
         # devices:
       # - "/dev/usbcam:/dev/usbcam"
       # - "/dev/video0:/dev/video0"
