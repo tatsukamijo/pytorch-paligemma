@@ -65,7 +65,7 @@ RUN tar -C /opt -xzf nvim-linux64.tar.gz
 RUN echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> /root/.bashrc
 
 # Install PyTorch and other Python packages
-RUN pip install matplotlib transformers && \
+RUN pip install matplotlib transformers accelerate>=0.26.0 && \
     pip install torch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0 --index-url https://download.pytorch.org/whl/cu121
 
 # Copy the helper scripts to the working directory
