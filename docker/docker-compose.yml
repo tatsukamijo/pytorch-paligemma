@@ -1,0 +1,43 @@
+version: "2.4"
+
+################################################################################
+
+services:
+  paligemma:
+    hostname: teleop
+    runtime: nvidia
+    image: common_paligemma:latest
+    container_name: "${PROJECT}_paligemma"
+    privileged: false
+    environment:
+      # Display X Server GUI.
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      # Configure Nvidia Docker interface.
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - NVIDIA_REQUIRE_CUDA=cuda>=11.0
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    shm_size: '8gb'
+    volumes:
+      # Map repository sources.
+      - ./scripts:/root/scripts
+      - ../:/root/work
+      - "/robot-qnap-2/kamijo/dataset:/root/dataset"
+      # Grant display access to X Server.
+      - /tmp/.X11-unix:/tmp/.X11-unix
+        # devices:
+      # - "/dev/usbcam:/dev/usbcam"
+      # - "/dev/video0:/dev/video0"
+      # - "/dev/video1:/dev/video1"
+      # - "/dev/video2:/dev/video2"
+      # - "/dev/video3:/dev/video3"
+      # - "/dev/video4:/dev/video4"
+      # - "/dev/video5:/dev/video5"
+      # - "/dev/media0:/dev/media0"
+      # - "/dev/media1:/dev/media1"
+
+    network_mode: host
+    command: ./scripts/initialize-docker-container.sh
